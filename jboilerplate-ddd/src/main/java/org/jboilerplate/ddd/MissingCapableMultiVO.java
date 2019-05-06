@@ -10,13 +10,22 @@ package org.jboilerplate.ddd;
 public abstract class MissingCapableMultiVO<V extends MissingCapableMultiVO<V>> 
         extends MultiVO<V>
         implements MissingCapable<V> {
+        
+//    protected static <V extends MissingCapableMultiVO<V>> V createOrGetMissing(Class<V> clazz, Object... attributes) {
+//        V vo = MultiVO.createNonInitializedInstance(clazz);       
+//        vo.setAttributes(attributes);
+//        if (vo.equals(vo.missing())) return vo.missing();
+//        vo.verify();        
+//        return vo;                
+//    }
     
     protected MissingCapableMultiVO() {        
     }
-            
+                            
     @Override
-    protected void verify() {        
+    protected V verify() {        
         verifyMissing();
         super.verify();
+        return (V) this;
     }    
 }

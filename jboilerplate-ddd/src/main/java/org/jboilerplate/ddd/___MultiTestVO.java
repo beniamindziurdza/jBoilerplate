@@ -9,47 +9,43 @@ import java.util.function.Function;
  * @author Beniamin.Dziurdza
  */
 class ___MultiTestVO extends MultiVO<___MultiTestVO> {
-          
-    // the only public way to create instance. Could return Missing/Special/NUll object instead of null
-    public static ___MultiTestVO create(Integer x, Object obj) {
-
-        ___MultiTestVO vo = MultiVO.createNonInitializedInstance(___MultiTestVO.class);
-
-        vo.setObj(obj);
-        vo.setX(x);
-
-        return vo;
+        
+    public static ___MultiTestVO createOrGetValue(___MultiTestVO value, int x, Object obj) {                      
+        return MultiVO.getVerifiedInstanceOrGetValueIfAllAttributesAreNull(new ___MultiTestVO(x, obj), value);        
     }
-
-    protected ___MultiTestVO() {
-        super();
+        
+    protected ___MultiTestVO(int x, Object obj) {
+        this.x = x;
+        this.obj = obj;
     }
-
+        
+//    @Override
+//    protected void setAttributes(Object... attributes) {
+//        x = (int) attributes[0];
+//        obj = attributes[1];
+//    }
+            
     Integer x;
     public Integer getX() {
         return x;
-    }
-    protected void setX(Integer x) {
-        this.x = x;
     }
 
     Object obj;
     public Object getObj() {
         return obj;
     }
-    protected void setObj(Object obj) {
-        this.obj = obj;
-    }
 
     public static List<Function<MultiVO<___MultiTestVO>, Object>> ACCESSORS
             =  Collections.unmodifiableList(java.util.Arrays.asList(
                 instance -> ((___MultiTestVO) instance).x,
-                instance -> ((___MultiTestVO) instance).getObj()
+                instance -> ((___MultiTestVO) instance).obj //getObj()
             ));
             
     @Override
     protected List<Function<MultiVO<___MultiTestVO>, Object>> getAccessors() {
         return ACCESSORS;
     }
+
+
 
 }

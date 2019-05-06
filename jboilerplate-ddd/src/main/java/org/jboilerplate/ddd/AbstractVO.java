@@ -19,11 +19,23 @@ public abstract class AbstractVO<V extends AbstractVO<V> > implements ValueObjec
 
         return vo;
     }
-        
+    
     protected AbstractVO() {
     }
     
-    protected abstract void verify();    
+    protected IValidationResult validateMe() {
+        return new ValidationResult(true);
+    }
+    
+    protected DomainException IValidationResultToDomainException(IValidationResult validationResult) {
+        return new DomainException(validationResult);
+    }
+    
+    protected V verify() {
+        IValidationResult validationResult = validateMe();
+        if (!validationResult.isSatisfied()) throw IValidationResultToDomainException(validationResult);
+        return (V) this;
+    }
   
     @Override
     public boolean canEqual(Object o) {

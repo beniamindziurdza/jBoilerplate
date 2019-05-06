@@ -1,7 +1,9 @@
 package org.jboilerplate.ddd;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -12,14 +14,81 @@ import java.util.stream.Collectors;
 public abstract class MultiVO<V extends MultiVO<V>> 
         extends AbstractVO<V>
         implements ValueObject {
-     
+         
+//    protected static <V extends MultiVO<V>> V createOrGetValueIfAllAttributesAreNull(Class<V> clazz, V value, Object... attributes) {
+//        V vo = createNonInitializedInstance(clazz);
+//        vo.setAttributes(attributes);
+//        return getVerifiedInstanceOrGetValueIfAllAttributesAreNull(vo, value);
+//    }    
+//        
+//    protected abstract void setAttributes(Object ... attributes);
+    
+    protected static <V extends MultiVO<V>> V getVerifiedInstanceOrGetValueIf(V initializedButNotVerifiedYetInstance, V value, Predicate<V> hasToReturnValue) {
+        V vo = initializedButNotVerifiedYetInstance;
+        if (hasToReturnValue.test(vo)) return value;
+        return vo.verify();
+    }    
+    
+    protected static <V extends MultiVO<V>> V getVerifiedInstance(V initializedButNotVerifiedYetInstance) {        
+        return getVerifiedInstanceOrGetValueIf(initializedButNotVerifiedYetInstance, null, (V v) -> false );
+    }
+    
+    protected static <V extends MultiVO<V>> V getVerifiedInstanceOrGetValueIfAllAttributesAreNull(V initializedButNotVerifiedYetInstance, V value) {        
+        return getVerifiedInstanceOrGetValueIf(initializedButNotVerifiedYetInstance, value, (V v) -> v.allAttributesAreNull() );
+    }
+
+    protected static <V extends MultiVO<V>> V getVerifiedInstanceOrGetNullIfAllAttributesAreNull(V initializedButNotVerifiedYetInstance) {        
+        return getVerifiedInstanceOrGetValueIf(initializedButNotVerifiedYetInstance, null, (V v) -> v.allAttributesAreNull() );
+    }    
+
+    protected static <V extends MultiVO<V>> CreationResult<V> getCreationResultOfInstanceOrValueIf(V initializedButNotValidatedYetInstance, V value, Predicate<V> hasToReturnValue) {
+        V vo = initializedButNotValidatedYetInstance;
+        if (hasToReturnValue.test(vo)) return new CreationResult<>(value, new ValidationResult(true));
+        IValidationResult validationResult = vo.validateMe();
+        return new CreationResult<>(validationResult.isSatisfied() ? vo : null, validationResult);
+    }
+    
+    protected static <V extends MultiVO<V>> CreationResult<V> getCreationResultOfInstance(V initializedButNotVerifiedYetInstance) {        
+        return getCreationResultOfInstanceOrValueIf(initializedButNotVerifiedYetInstance, null, (V v) -> false );
+    }
+    
+    protected static <V extends MultiVO<V>> CreationResult<V> getCreationResultOfInstanceOrValueIfAllAttributesAreNull(V initializedButNotVerifiedYetInstance, V value) {        
+        return getCreationResultOfInstanceOrValueIf(initializedButNotVerifiedYetInstance, value, (V v) -> v.allAttributesAreNull() );
+    }
+        
+    protected static <V extends MultiVO<V>> CreationResult<V> getCreationResultOfInstanceOrNullIfAllAttributesAreNull(V initializedButNotVerifiedYetInstance) {        
+        return getCreationResultOfInstanceOrValueIf(initializedButNotVerifiedYetInstance, null, (V v) -> v.allAttributesAreNull() );
+    }
+        
+    protected static <V extends MultiVO<V>> CreationResult<V> ConsumeValidationResultAndGetCreationResultOfInstanceOrValueIf(
+            Consumer<IValidationResult> validationResultConsumer, V initializedButNotValidatedYetInstance, V value, Predicate<V> hasToReturnValue) {
+        CreationResult<V> creationResult = getCreationResultOfInstanceOrValueIf(initializedButNotValidatedYetInstance, value, hasToReturnValue);
+        validationResultConsumer.accept(creationResult.getValidationResult());
+        return creationResult;
+    }
+    
+    protected static <V extends MultiVO<V>> CreationResult<V> ConsumeValidationResultAndGetCreationResultOfInstance(
+            Consumer<IValidationResult> validationResultConsumer, V initializedButNotValidatedYetInstance) {
+        return ConsumeValidationResultAndGetCreationResultOfInstanceOrValueIf(validationResultConsumer, initializedButNotValidatedYetInstance, null, (V v) -> false );
+    }
+    
+    protected static <V extends MultiVO<V>> CreationResult<V> ConsumeValidationResultAndGetCreationResultOfInstanceOrValueIfAllAttributesAreNull(
+        Consumer<IValidationResult> validationResultConsumer, V initializedButNotValidatedYetInstance, V value) {
+        return ConsumeValidationResultAndGetCreationResultOfInstanceOrValueIf(validationResultConsumer, initializedButNotValidatedYetInstance, value, (V v) -> v.allAttributesAreNull());
+    }
+
+    protected static <V extends MultiVO<V>> CreationResult<V> ConsumeValidationResultAndGetCreationResultOfInstanceOrNullIfAllAttributesAreNull(
+        Consumer<IValidationResult> validationResultConsumer, V initializedButNotValidatedYetInstance) {
+        return ConsumeValidationResultAndGetCreationResultOfInstanceOrValueIf(validationResultConsumer, initializedButNotValidatedYetInstance, null, (V v) -> v.allAttributesAreNull());
+    }
+    
+    protected boolean allAttributesAreNull() {
+        return getAccessors().stream().allMatch(accessor -> accessor.apply(this) == null);
+    }
+  
     protected MultiVO() {
     }
     
-    @Override
-    protected void verify() {        
-    }
-
     protected abstract List<Function<MultiVO<V>, Object>> getAccessors();
  
     @Override
