@@ -23,17 +23,18 @@ public abstract class AbstractVO<V extends AbstractVO<V> > implements ValueObjec
     protected AbstractVO() {
     }
     
-    protected IValidationResult validateMe() {
-        return new ValidationResult(true);
-    }
+    //protected abstract IValidationResult validate(V other);
     
-    protected DomainException IValidationResultToDomainException(IValidationResult validationResult) {
+    protected abstract IValidationResult validateMe();
+
+    
+    protected DomainException DomainExceptionOf(IValidationResult validationResult) {
         return new DomainException(validationResult);
     }
     
     protected V verify() {
         IValidationResult validationResult = validateMe();
-        if (!validationResult.isSatisfied()) throw IValidationResultToDomainException(validationResult);
+        if (!validationResult.isSatisfied()) throw DomainExceptionOf(validationResult);
         return (V) this;
     }
   

@@ -22,7 +22,13 @@ public class ValidationResult implements IValidationResult {
         this.isSatisfied = isSatisfied;
         this.failureReasons = failureReasons;
         this.warnings = warnings;
-    }        
+    } 
+    
+//    public ValidationResult(boolean isSatisfied, List<DomainMessage> failureReasons, List<DomainMessage> warnings ) {
+//        this.isSatisfied = isSatisfied;
+//        this.failureReasons = failureReasons;
+//        this.warnings = warnings;
+//    } 
     
     protected Boolean isSatisfied;    
     @Override
