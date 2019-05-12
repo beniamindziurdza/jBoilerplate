@@ -5,12 +5,12 @@ import java.util.Objects;
 /**
  *
  * @author Beniamin.Dziurdza
- * @param <V> Value Object class
+ * @param <VO> Value Object class
  */
-public abstract class AbstractVO<V extends AbstractVO<V> > implements ValueObject {
+public abstract class AbstractVO<VO extends AbstractVO<VO> > implements ValueObject {
     
-    protected static <V extends AbstractVO<V>> V createNonInitializedInstance(Class<V> clazz) {
-        V vo;
+    protected static <VO extends AbstractVO<VO>> VO createNonInitializedInstance(Class<VO> clazz) {
+        VO vo;
         try {
             vo = clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
@@ -22,20 +22,17 @@ public abstract class AbstractVO<V extends AbstractVO<V> > implements ValueObjec
     
     protected AbstractVO() {
     }
-    
-    //protected abstract IValidationResult validate(V other);
-    
-    protected abstract IValidationResult validateMe();
+        
+    protected abstract ValidationResult validateMe();
 
-    
-    protected DomainException DomainExceptionOf(IValidationResult validationResult) {
+    protected DomainException DomainExceptionOf(ValidationResult validationResult) {
         return new DomainException(validationResult);
     }
     
-    protected V verify() {
-        IValidationResult validationResult = validateMe();
+    protected VO verify() {
+        ValidationResult validationResult = validateMe();
         if (!validationResult.isSatisfied()) throw DomainExceptionOf(validationResult);
-        return (V) this;
+        return (VO) this;
     }
   
     @Override

@@ -1,60 +1,29 @@
 package org.jboilerplate.ddd;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
-public class ValidationResult implements IValidationResult {
+/**
+ *
+ * @author Beniamin.Dziurdza
+ */
+public interface ValidationResult {    
+    boolean isSatisfied();
+    Optional<DomainMessage> subject();
+    List<DomainMessage> failureReasons();
+    List<DomainMessage> warnings(); 
+    List<ValidationResult> subresults();
     
-    public ValidationResult(boolean isSatisfied) {
-        this.isSatisfied = isSatisfied;
-        this.failureReasons = new ArrayList<>();
-        this.warnings = new ArrayList<>();
+    static ValidationResult of(boolean isSatisfied) {
+        return isSatisfied ? SimpleValidationResult.SATISFIED : SimpleValidationResult.NOT_SATISFIED;
     }
     
-    public ValidationResult(boolean isSatisfied, List<DomainMessage> failureReasons ) {
-        this.isSatisfied = isSatisfied;
-        this.failureReasons = failureReasons;
-        this.warnings = new ArrayList<>();
-    }    
-    
-    public ValidationResult(boolean isSatisfied, List<DomainMessage> failureReasons, List<DomainMessage> warnings ) {
-        this.isSatisfied = isSatisfied;
-        this.failureReasons = failureReasons;
-        this.warnings = warnings;
-    } 
-    
-//    public ValidationResult(boolean isSatisfied, List<DomainMessage> failureReasons, List<DomainMessage> warnings ) {
-//        this.isSatisfied = isSatisfied;
-//        this.failureReasons = failureReasons;
-//        this.warnings = warnings;
-//    } 
-    
-    protected Boolean isSatisfied;    
-    @Override
-    public boolean isSatisfied() {
-        return isSatisfied;
-    }
-
-    protected List<DomainMessage> failureReasons;
-    @Override
-    public List<DomainMessage> failureReasons() {
-        return Collections.unmodifiableList(failureReasons);
-    }
-
-    protected List<DomainMessage> warnings;
-    @Override
-    public List<DomainMessage> warnings() {
-        return Collections.unmodifiableList(warnings);
+    static ValidationResult satisfied() {
+        return SimpleValidationResult.SATISFIED;
     }
     
-    /*  
-    public void appendFailureReason(DomainMessage failureReason) {       
-        failureReasons.add(failureReason);
+    static ValidationResult notSatisfied() {
+        return SimpleValidationResult.NOT_SATISFIED;
     }
     
-    public void appendWarning(DomainMessage warning) {                
-        warnings.add(warning);
-    }    
-    */
 }

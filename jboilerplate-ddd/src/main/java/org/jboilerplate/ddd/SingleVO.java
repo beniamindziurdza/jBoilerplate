@@ -8,73 +8,73 @@ import java.util.function.Predicate;
 /**
  *
  * @author Beniamin.Dziurdza
- * @param <V> domain value object class
+ * @param <VO> domain value object class
  * @param <A> immutable type of value object attribute
  */
 //@MappedSuperclass
 //@Embeddable
-public abstract class SingleVO<V extends SingleVO<V,A>, A>
-        extends AbstractVO<V>
+public abstract class SingleVO<VO extends SingleVO<VO,A>, A>
+        extends AbstractVO<VO>
         implements ValueObject {
 
-    public static <V extends SingleVO<V, A>, A> V createOrGetValueIf(Class<V> clazz, A attribute, V value, Predicate<A> hasToReturnValue) {
+    public static <VO extends SingleVO<VO, A>, A> VO createOrGetValueIf(Class<VO> clazz, A attribute, VO value, Predicate<A> hasToReturnValue) {
         if (hasToReturnValue.test(attribute)) return value;
-        V vo = createNonInitializedInstance(clazz);
+        VO vo = createNonInitializedInstance(clazz);
         vo.setAttribute(attribute);
         return vo.verify();
     }
     
-    public static <V extends SingleVO<V, A>, A> V create(Class<V> clazz, A attribute) {
+    public static <VO extends SingleVO<VO, A>, A> VO create(Class<VO> clazz, A attribute) {
         return createOrGetValueIf(clazz, attribute, null, (A a) -> false );
     }
     
-    public static <V extends SingleVO<V, A>, A> V createOrGetValueIfAttributeIsNull(Class<V> clazz, A attribute, V value) {
+    public static <VO extends SingleVO<VO, A>, A> VO createOrGetValueIfNullAttribute(Class<VO> clazz, A attribute, VO value) {
         return createOrGetValueIf(clazz, attribute, value, (A a) -> a == null );
     }
     
-    public static <V extends SingleVO<V, A>, A> V createOrGetNullIfAttributeIsNull(Class<V> clazz, A attribute) {
+    public static <VO extends SingleVO<VO, A>, A> VO createOrGetNullIfNullAttribute(Class<VO> clazz, A attribute) {
         return createOrGetValueIf(clazz, attribute, null, (A a) -> a == null );
     }
         
-    public static <V extends SingleVO<V, A>, A> CreationResult<V> tryCreateOrGetValueIf(Class<V> clazz, A attribute, V value, Predicate<A> hasToReturnValue) {
-        if (hasToReturnValue.test(attribute)) return new CreationResult<>(value, new ValidationResult(true));
-        V vo = createNonInitializedInstance(clazz);
+    public static <VO extends SingleVO<VO, A>, A> CreationResult<VO> tryCreateOrGetValueIf(Class<VO> clazz, A attribute, VO value, Predicate<A> hasToReturnValue) {
+        if (hasToReturnValue.test(attribute)) return new CreationResult<>(value, ValidationResult.satisfied());
+        VO vo = createNonInitializedInstance(clazz);
         vo.setAttribute(attribute);        
-        IValidationResult validationResult = vo.validateMe();                
+        ValidationResult validationResult = vo.validateMe();                
         return new CreationResult<>(validationResult.isSatisfied() ? vo : null, validationResult);
     }
         
-    public static <V extends SingleVO<V, A>, A> CreationResult<V> tryCreate(Class<V> clazz, A attribute) {
+    public static <VO extends SingleVO<VO, A>, A> CreationResult<VO> tryCreate(Class<VO> clazz, A attribute) {
         return tryCreateOrGetValueIf(clazz, attribute, null, (A a) -> false);
     } 
 
-    public static <V extends SingleVO<V, A>, A> CreationResult<V> tryCreateOrGetValueIfAttributeIsNull(Class<V> clazz, A attribute, V value) {
+    public static <VO extends SingleVO<VO, A>, A> CreationResult<VO> tryCreateOrGetValueIfNullAttribute(Class<VO> clazz, A attribute, VO value) {
         return tryCreateOrGetValueIf(clazz, attribute, value, (A a) -> a == null);
     }
 
-    public static <V extends SingleVO<V, A>, A> CreationResult<V> tryCreateOrGetNullIfAttributeIsNull(Class<V> clazz, A attribute) {
+    public static <VO extends SingleVO<VO, A>, A> CreationResult<VO> tryCreateOrGetNullIfNullAttribute(Class<VO> clazz, A attribute) {
         return tryCreateOrGetValueIf(clazz, attribute, null, (A a) -> a == null);
     }
     
-    public static <V extends SingleVO<V, A>, A> CreationResult<V> consumeValidationResultAndTryCreateOrGetValueIf(
-            Consumer<IValidationResult> validationResultConsumer, Class<V> clazz, A attribute, V value, Predicate<A> hasToReturnValue) {
-       CreationResult<V> result = tryCreateOrGetValueIf(clazz, attribute, value, hasToReturnValue);
+    public static <VO extends SingleVO<VO, A>, A> CreationResult<VO> tryCreateOrGetValueIf(
+            Consumer<ValidationResult> validationResultConsumer, Class<VO> clazz, A attribute, VO value, Predicate<A> hasToReturnValue) {
+       CreationResult<VO> result = tryCreateOrGetValueIf(clazz, attribute, value, hasToReturnValue);
        validationResultConsumer.accept(result.validationResult);
        return result;
     }
       
-    public static <V extends SingleVO<V, A>, A> CreationResult<V> consumeValidationResultAndTryCreate(Consumer<IValidationResult> validationResultConsumer, Class<V> clazz, A attribute) {
-        return consumeValidationResultAndTryCreateOrGetValueIf(validationResultConsumer, clazz, attribute, null, (A a) -> false);
+    public static <VO extends SingleVO<VO, A>, A> CreationResult<VO> tryCreate(Consumer<ValidationResult> validationResultConsumer, Class<VO> clazz, A attribute) {
+        return tryCreateOrGetValueIf(validationResultConsumer, clazz, attribute, null, (A a) -> false);
     }
 
-    public static <V extends SingleVO<V, A>, A> CreationResult<V> consumeValidationResultAndTryCreateOrGetValueIfAttributeIsNull(
-            Consumer<IValidationResult> validationResultConsumer, Class<V> clazz, A attribute, V value) {
-        return  consumeValidationResultAndTryCreateOrGetValueIf(validationResultConsumer, clazz, attribute, value, (A a) -> a == null);
+    public static <VO extends SingleVO<VO, A>, A> CreationResult<VO> tryCreateOrGetValueIfNullAttribute(
+            Consumer<ValidationResult> validationResultConsumer, Class<VO> clazz, A attribute, VO value) {
+        return  tryCreateOrGetValueIf(validationResultConsumer, clazz, attribute, value, (A a) -> a == null);
     }
     
-    public static <V extends SingleVO<V, A>, A> CreationResult<V> consumeValidationResultAndTryCreateOrGetNullIfAttributeIsNull(
-            Consumer<IValidationResult> validationResultConsumer, Class<V> clazz, A attribute) {
-        return  consumeValidationResultAndTryCreateOrGetValueIf(validationResultConsumer, clazz, attribute, null, (A a) -> a == null);
+    public static <VO extends SingleVO<VO, A>, A> CreationResult<VO> tryCreateOrGetNullIfNullAttribute(
+            Consumer<ValidationResult> validationResultConsumer, Class<VO> clazz, A attribute) {
+        return  tryCreateOrGetValueIf(validationResultConsumer, clazz, attribute, null, (A a) -> a == null);
     }
     
     protected SingleVO() {
@@ -91,7 +91,7 @@ public abstract class SingleVO<V extends SingleVO<V,A>, A>
     @Override
     public boolean equals(Object o) {
         if (this.getClass().isInstance(o)) {
-            V other = (V) o;
+            VO other = (VO) o;
             return other.canEqual(this) && Objects.equals(this.attribute, other.attribute);
         }
         return false;

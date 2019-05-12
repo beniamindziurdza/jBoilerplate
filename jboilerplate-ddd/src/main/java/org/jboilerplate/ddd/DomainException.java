@@ -6,9 +6,9 @@ package org.jboilerplate.ddd;
  */
 public class DomainException extends RuntimeException {
 
-    protected IValidationResult validationResult;
+    protected ValidationResult validationResult;
     
-    public DomainException(IValidationResult validationResult) {
+    public DomainException(ValidationResult validationResult) {
         this.validationResult = validationResult;
     }
     

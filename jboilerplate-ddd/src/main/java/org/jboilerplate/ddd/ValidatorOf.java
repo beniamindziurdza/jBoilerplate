@@ -8,6 +8,6 @@ package org.jboilerplate.ddd;
  */
 public interface ValidatorOf<T> {
                 
-    public IValidationResult validate(T instance);
+    public ValidationResult validate(T instance);
     
 }
