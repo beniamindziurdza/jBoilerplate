@@ -7,11 +7,11 @@ package org.jboilerplate.ddd;
 /**
  *
  * @author Beniamin.Dziurdza
- * @param <VO>
+ * @param <voT>
  * @param <A>
  */
-public abstract class NullableSingleVO<VO extends NullableSingleVO<VO,A>, A>
-        extends SingleVO<VO,A>
+public abstract class NullableVO<voT extends NullableVO<voT,A>, A>
+        extends VO<voT,A>
         implements ValueObject { 
 
     @Override 

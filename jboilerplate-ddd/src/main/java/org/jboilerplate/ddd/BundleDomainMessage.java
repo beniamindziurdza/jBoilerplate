@@ -4,7 +4,7 @@ package org.jboilerplate.ddd;
  *
  * @author Beniamin.Dziurdza
  */
-public class BundleDomainMessage implements IBundleMessage {
+public class BundleDomainMessage implements IBundleDomainMessage {
         
     public BundleDomainMessage(String bundle, String key, Object[] parameters) {
         this.bundle = bundle;

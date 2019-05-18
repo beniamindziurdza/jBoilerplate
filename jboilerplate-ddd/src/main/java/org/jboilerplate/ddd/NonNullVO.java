@@ -3,11 +3,11 @@ package org.jboilerplate.ddd;
 /**
  *
  * @author Beniamin.Dziurdza
- * @param <VO>
+ * @param <voT>
  * @param <A>
  */
-public abstract class NonNullSingleVO<VO extends NonNullSingleVO<VO,A>, A>
-        extends SingleVO<VO,A>
+public abstract class NonNullVO<voT extends NonNullVO<voT,A>, A>
+        extends VO<voT,A>
         implements ValueObject { 
 
     @Override 

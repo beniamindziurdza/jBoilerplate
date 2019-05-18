@@ -5,12 +5,12 @@ import java.util.Objects;
 /**
  *
  * @author Beniamin.Dziurdza
- * @param <VO> Value Object class
+ * @param <voT> Value Object class
  */
-public abstract class AbstractVO<VO extends AbstractVO<VO> > implements ValueObject {
+public abstract class AbstractVO<voT extends AbstractVO<voT> > implements ValueObject {
     
-    protected static <VO extends AbstractVO<VO>> VO createNonInitializedInstance(Class<VO> clazz) {
-        VO vo;
+    protected static <voT extends AbstractVO<voT>> voT createNonInitializedInstance(Class<voT> clazz) {
+        voT vo;
         try {
             vo = clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
@@ -29,10 +29,10 @@ public abstract class AbstractVO<VO extends AbstractVO<VO> > implements ValueObj
         return new DomainException(validationResult);
     }
     
-    protected VO verify() {
+    protected voT verify() {
         ValidationResult validationResult = validateMe();
         if (!validationResult.isSatisfied()) throw DomainExceptionOf(validationResult);
-        return (VO) this;
+        return (voT) this;
     }
   
     @Override

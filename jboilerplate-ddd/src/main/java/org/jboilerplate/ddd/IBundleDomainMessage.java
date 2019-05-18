@@ -4,7 +4,7 @@ package org.jboilerplate.ddd;
  *
  * @author Beniamin.Dziurdza
  */
-public interface IBundleMessage extends DomainMessage {
+public interface IBundleDomainMessage extends DomainMessage {
     String bundle();
     String key();
     Object [] parameters();

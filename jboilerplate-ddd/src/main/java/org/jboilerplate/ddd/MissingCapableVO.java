@@ -7,16 +7,16 @@ import java.util.function.Predicate;
  *
  * @author Beniamin.Dziurdza
 
- * @param <VO> 
+ * @param <voT> 
  * @param <A>
  */
-public abstract class MissingCapableSingleVO<VO extends MissingCapableSingleVO<VO,A>, A>
-        extends SingleVO<VO, A>
-        implements MissingCapable<VO> {
+public abstract class MissingCapableVO<voT extends MissingCapableVO<voT,A>, A>
+        extends VO<voT, A>
+        implements MissingCapable<voT> {
                 
     /**
-     * Factory method of <code>MissingCapableSingleVO</code>
-     * @param <VO> Value Object type
+     * Factory method of <code>MissingCapableVO</code>
+     * @param <voT> Value Object type
      * @param <A> Attribute type
      * @param clazz <code>Class&lt;VO&gt;</code> instance
      * @param attribute Attribute of Value Object
@@ -24,13 +24,13 @@ public abstract class MissingCapableSingleVO<VO extends MissingCapableSingleVO<V
      * if <code>attribute</code> equals missing attribute.
      * Otherwise, a new Value Object instance is returned.
      */
-    public static <VO extends MissingCapableSingleVO<VO, A>, A> VO createOrGetMissing(Class<VO> clazz, A attribute) {        
+    public static <voT extends MissingCapableVO<voT, A>, A> voT createOrGetMissing(Class<voT> clazz, A attribute) {        
        return createOrGetMissingIf(clazz, attribute, (A a) -> false);
     }    
     
     /**
-     * Factory method of <code>MissingCapableSingleVO</code>
-     * @param <VO> Value Object type
+     * Factory method of <code>MissingCapableVO</code>
+     * @param <voT> Value Object type
      * @param <A> Attribute type
      * @param clazz <code>Class&lt;VO&gt;</code> instance
      * @param attribute Attribute of Value Object
@@ -40,17 +40,17 @@ public abstract class MissingCapableSingleVO<VO extends MissingCapableSingleVO<V
      * or <code>attribute</code> equals missing attribute.
      * Otherwise, a new Value Object instance is returned.
      */
-    public static <VO extends MissingCapableSingleVO<VO, A>, A> VO createOrGetMissingIf(
-            Class<VO> clazz, A attribute, Predicate<A> hasToReturnMissing) {
-        VO vo = SingleVO.createNonInitializedInstance(clazz);
+    public static <voT extends MissingCapableVO<voT, A>, A> voT createOrGetMissingIf(
+            Class<voT> clazz, A attribute, Predicate<A> hasToReturnMissing) {
+        voT vo = VO.createNonInitializedInstance(clazz);
         vo.setAttribute(attribute);
         if (hasToReturnMissing.test(attribute) || vo.equals(vo.missing())) return vo.missing();        
         return vo.verify();             
     }
     
-    public static <VO extends MissingCapableSingleVO<VO, A>, A> CreationResult<VO> tryCreateOrGetMissingIf(
-            Class<VO> clazz, A attribute, Predicate<A> hasToReturnMissing) {
-        VO vo = SingleVO.createNonInitializedInstance(clazz);
+    public static <voT extends MissingCapableVO<voT, A>, A> CreationResult<voT> tryCreateOrGetMissingIf(
+            Class<voT> clazz, A attribute, Predicate<A> hasToReturnMissing) {
+        voT vo = VO.createNonInitializedInstance(clazz);
         vo.setAttribute(attribute);
         if (hasToReturnMissing.test(attribute) || vo.equals(vo.missing())) return new CreationResult<>(vo.missing(), ValidationResult.satisfied());
         vo.verifyMissing();
@@ -58,26 +58,26 @@ public abstract class MissingCapableSingleVO<VO extends MissingCapableSingleVO<V
         return new CreationResult<>(validationResult.isSatisfied() ? vo : null, validationResult);
     }
     
-    public static <VO extends MissingCapableSingleVO<VO, A>, A> CreationResult<VO> tryCreateOrGetMissing(
-            Class<VO> clazz, A attribute) {
+    public static <voT extends MissingCapableVO<voT, A>, A> CreationResult<voT> tryCreateOrGetMissing(
+            Class<voT> clazz, A attribute) {
         return tryCreateOrGetMissingIf(clazz, attribute, (A a) -> false);
     }    
         
-    public static <VO extends MissingCapableSingleVO<VO, A>, A> CreationResult<VO> tryCreateOrGetMissingIf(
-            Consumer<ValidationResult> validationResultConsumer, Class<VO> clazz, A attribute, Predicate<A> hasToReturnMissing) {        
+    public static <voT extends MissingCapableVO<voT, A>, A> CreationResult<voT> tryCreateOrGetMissingIf(
+            Consumer<ValidationResult> validationResultConsumer, Class<voT> clazz, A attribute, Predicate<A> hasToReturnMissing) {        
         CreationResult creationResult = tryCreateOrGetMissingIf(clazz, attribute, hasToReturnMissing);
         validationResultConsumer.accept(creationResult.getValidationResult());
         return creationResult;
     }
                
-    protected MissingCapableSingleVO() {
+    protected MissingCapableVO() {
     }
             
     @Override
-    protected VO verify() {        
+    protected voT verify() {        
         verifyMissing();
         super.verify();
-        return (VO) this;
+        return (voT) this;
     }
             
 }
