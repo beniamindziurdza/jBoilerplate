@@ -1,9 +1,7 @@
 package org.jboilerplate.jinq;
 
-import java.util.List;
 import org.jboilerplate.ddd.DomainEntity;
 import org.jboilerplate.ddd.DomainIdentity;
-
 
 /**
  *
@@ -11,7 +9,7 @@ import org.jboilerplate.ddd.DomainIdentity;
  * @param <E>
  * @param <I>
  */
-public interface ICanFindBySpecification<E extends DomainEntity<E,I>, I extends DomainIdentity> {
+public interface ICanCountBySpecification<E extends DomainEntity<E,I>, I extends DomainIdentity> {
         
-    List<E> find(WhereSpecificationOf<E> specification);    
+    long count(WhereSpecificationOf<E> specification);    
 }

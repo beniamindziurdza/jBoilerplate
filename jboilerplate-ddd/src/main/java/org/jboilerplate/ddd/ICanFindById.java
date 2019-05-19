@@ -7,5 +7,5 @@ package org.jboilerplate.ddd;
  * @param <I>
  */
 public interface ICanFindById<E extends DomainEntity<E,I>, I extends DomainIdentity> {
-    E find(I identity);        
+    E findOrGetNull(I identity);        
 }
