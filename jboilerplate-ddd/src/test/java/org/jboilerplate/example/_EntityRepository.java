@@ -1,4 +1,7 @@
-package org.jboilerplate.ddd;
+package org.jboilerplate.example;
+
+import org.jboilerplate.ddd.ICanFindAll;
+import org.jboilerplate.ddd.ICanFindById;
 
 
 /**

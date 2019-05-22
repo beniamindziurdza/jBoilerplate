@@ -1,8 +1,13 @@
-package org.jboilerplate.ddd;
+package org.jboilerplate.example;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import org.jboilerplate.ddd.CompositeValidationResultBuilder;
+import org.jboilerplate.ddd.CreationResult;
+import org.jboilerplate.ddd.MultiVO;
+import org.jboilerplate.ddd.SimpleValidationResult;
+import org.jboilerplate.ddd.ValidationResult;
 
 /**
  *

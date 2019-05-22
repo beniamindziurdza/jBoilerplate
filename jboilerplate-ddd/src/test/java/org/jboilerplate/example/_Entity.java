@@ -1,4 +1,9 @@
-package org.jboilerplate.ddd;
+package org.jboilerplate.example;
+
+import org.jboilerplate.ddd.AggregateRoot;
+import org.jboilerplate.ddd.BaseDomainEntity;
+
+
 
 /**
  *

@@ -1,4 +1,4 @@
-package org.jboilerplate.ddd;
+package org.jboilerplate.example;
 
 /**
  *
