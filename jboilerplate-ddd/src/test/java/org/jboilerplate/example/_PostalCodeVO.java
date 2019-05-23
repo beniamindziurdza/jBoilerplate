@@ -1,6 +1,6 @@
 package org.jboilerplate.example;
 
-import org.jboilerplate.ddd.MissingCapableNonNullNorEmptyStringSingleVO;
+import org.jboilerplate.ddd.valueobject.MissingCapableNonNullNorEmptyStringSingleVO;
 
 /**
  *

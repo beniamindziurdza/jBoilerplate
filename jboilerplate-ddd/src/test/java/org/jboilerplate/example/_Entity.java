@@ -1,7 +1,7 @@
 package org.jboilerplate.example;
 
-import org.jboilerplate.ddd.AggregateRoot;
-import org.jboilerplate.ddd.BaseDomainEntity;
+import org.jboilerplate.ddd.aggregate.AggregateRoot;
+import org.jboilerplate.ddd.entity.BaseDomainEntity;
 
 
 

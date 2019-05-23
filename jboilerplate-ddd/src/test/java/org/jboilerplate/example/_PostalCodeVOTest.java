@@ -1,6 +1,6 @@
 package org.jboilerplate.example;
 
-import org.jboilerplate.ddd.VO;
+import org.jboilerplate.ddd.valueobject.VO;
 
 /**
  *

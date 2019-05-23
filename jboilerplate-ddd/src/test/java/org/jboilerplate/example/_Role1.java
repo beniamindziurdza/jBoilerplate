@@ -1,6 +1,6 @@
 package org.jboilerplate.example;
 
-import org.jboilerplate.ddd.AggregateRoot;
+import org.jboilerplate.ddd.aggregate.AggregateRoot;
 
 /**
  *

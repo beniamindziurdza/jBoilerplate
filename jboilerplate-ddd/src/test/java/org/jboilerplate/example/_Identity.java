@@ -1,7 +1,7 @@
 package org.jboilerplate.example;
 
-import org.jboilerplate.ddd.DomainIdentity;
-import org.jboilerplate.ddd.NonNullVO;
+import org.jboilerplate.ddd.identity.DomainIdentity;
+import org.jboilerplate.ddd.valueobject.NonNullVO;
 
 /**
  *

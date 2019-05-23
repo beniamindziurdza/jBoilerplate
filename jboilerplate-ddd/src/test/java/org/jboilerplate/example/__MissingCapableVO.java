@@ -1,10 +1,10 @@
 package org.jboilerplate.example;
 
 import java.util.Objects;
-import org.jboilerplate.ddd.AbstractVO;
-import org.jboilerplate.ddd.MissingCapable;
-import org.jboilerplate.ddd.ValidationResult;
-import org.jboilerplate.ddd.ValueObject;
+import org.jboilerplate.ddd.valueobject.AbstractVO;
+import org.jboilerplate.ddd.missing.MissingCapable;
+import org.jboilerplate.ddd.validation.ValidationResult;
+import org.jboilerplate.ddd.valueobject.ValueObject;
 
 /**
  *
