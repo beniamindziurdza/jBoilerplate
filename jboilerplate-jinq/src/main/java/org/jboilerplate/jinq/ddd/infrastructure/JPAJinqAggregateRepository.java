@@ -8,7 +8,7 @@ import org.jboilerplate.ddd.identity.DomainIdentity;
  * @param <R>
  * @param <I>
  */
-public abstract class JinqJPAAggregateRepository<R, I extends DomainIdentity>  {
+public abstract class JPAJinqAggregateRepository<R, I extends DomainIdentity>  {
 //        implements ICanFindAggregateByRootEntityId<R,I>, ICanFindAllAggregates<R>, ICanCountAllAggregates<R>, // possible to implement; seems to be easier in hibernate than eclipseLink
 //                ICanFindAggregatesBySpecification<R>, ICanCountBySpecification<R> { // are these last two interfaces possible to implement easily in generic way at all? Or leave them abstract...
     

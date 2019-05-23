@@ -19,7 +19,7 @@ import org.jinq.jpa.JinqJPAStreamProvider;
  * @param <E>
  * @param <I>
  */
-public abstract class JinqJPARepository<E extends DomainEntity<E,I>, I extends DomainIdentity> 
+public abstract class JPAJinqRepository<E extends DomainEntity<E,I>, I extends DomainIdentity> 
         implements ICanFindById<E,I>, ICanFindAll<E>, ICanCountAll<E>,
                 ICanFindBySpecification<E,I>, ICanCountBySpecification<E,I> {
     

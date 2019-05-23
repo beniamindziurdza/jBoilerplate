@@ -11,7 +11,7 @@ import org.jboilerplate.ddd.identity.DomainIdentity;
  * @param <E> domain entity backing aggregate root R
  * @param <I> identity of aggregate root (domain entity)
  */
-public abstract class JinqJPATheSameEntityAsAggregateRootRepository <R, E extends DomainEntity<E,I>, I extends DomainIdentity> {
+public abstract class JPAJinqTheSameEntityAsAggregateRootRepository <R, E extends DomainEntity<E,I>, I extends DomainIdentity> {
 //        implements ICanFindAggregateById<R,I>, ICanFindAllAggregates<R>, ICanCountAllAggregates<R>,
 //                ICanFindAggregatesBySpecification<R,E,I>, ICanCountBySpecification<R,E,I> {
                                                     

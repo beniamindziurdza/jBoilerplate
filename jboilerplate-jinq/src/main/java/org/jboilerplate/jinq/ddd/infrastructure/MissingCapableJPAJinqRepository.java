@@ -10,7 +10,7 @@ import org.jboilerplate.ddd.missing.MissingCapable;
  * @param <E>
  * @param <I>
  */
-public abstract class MissingCapableJinqJPARepository<E extends DomainEntity<E,I>, I extends DomainIdentity> extends JinqJPARepository<E, I>
+public abstract class MissingCapableJPAJinqRepository<E extends DomainEntity<E,I>, I extends DomainIdentity> extends JPAJinqRepository<E, I>
         implements MissingCapable<E> { // forcesth like MissingCapableDomainEntity
     
     final E missing = MissingCapable.getMissingOf(entityClass);
