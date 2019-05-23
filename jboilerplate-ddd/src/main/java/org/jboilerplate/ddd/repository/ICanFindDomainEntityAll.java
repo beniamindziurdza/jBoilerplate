@@ -8,6 +8,6 @@ import org.jboilerplate.ddd.entity.DomainEntity;
  * @author Beniamin.Dziurdza
  * @param <E>
  */
-public interface ICanFindAll<E extends DomainEntity> {
+public interface ICanFindDomainEntityAll<E extends DomainEntity> {
     List<E> findAll();
 }

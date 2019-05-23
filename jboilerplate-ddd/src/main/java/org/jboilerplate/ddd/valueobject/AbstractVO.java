@@ -27,13 +27,13 @@ public abstract class AbstractVO<voT extends AbstractVO<voT> > implements ValueO
         
     protected abstract ValidationResult validateMe();
 
-    protected DomainException DomainExceptionOf(ValidationResult validationResult) {
+    protected RuntimeException getValidationException(ValidationResult validationResult) {
         return new DomainException(validationResult);
     }
     
     protected voT verify() {
         ValidationResult validationResult = validateMe();
-        if (!validationResult.isSatisfied()) throw DomainExceptionOf(validationResult);
+        if (!validationResult.isSatisfied()) throw getValidationException(validationResult);
         return (voT) this;
     }
   

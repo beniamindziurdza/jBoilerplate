@@ -1,17 +1,17 @@
 package org.jboilerplate.jinq.ddd.infrastructure;
 
+import java.io.Serializable;
 import org.jboilerplate.ddd.entity.DomainEntity;
-import org.jboilerplate.ddd.identity.DomainIdentity;
 import org.jboilerplate.ddd.missing.MissingCapable;
 
 /**
  *
- * @author Beniamin.Dziurdza
  * @param <E>
  * @param <I>
  */
-public abstract class MissingCapableJPAJinqRepository<E extends DomainEntity<E,I>, I extends DomainIdentity> extends JPAJinqRepository<E, I>
-        implements MissingCapable<E> { // forcesth like MissingCapableDomainEntity
+public abstract class MissingCapableJPAJinqRepository<E extends DomainEntity<E,I>, I extends Serializable>
+        extends JPAJinqDomainEntityRepository<E, I>
+        implements MissingCapable<E> {
     
     final E missing = MissingCapable.getMissingOf(entityClass);
 

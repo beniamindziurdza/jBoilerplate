@@ -1,7 +1,7 @@
 package org.jboilerplate.ddd.repository;
 
+import java.io.Serializable;
 import org.jboilerplate.ddd.entity.DomainEntity;
-import org.jboilerplate.ddd.identity.DomainIdentity;
 
 /**
  *
@@ -9,6 +9,6 @@ import org.jboilerplate.ddd.identity.DomainIdentity;
  * @param <E>
  * @param <I>
  */
-public interface ICanFindById<E extends DomainEntity<E,I>, I extends DomainIdentity> {
+public interface ICanFindDomainEntityById<E extends DomainEntity<E,I>, I extends Serializable> {
     E findOrGetNull(I identity);        
 }

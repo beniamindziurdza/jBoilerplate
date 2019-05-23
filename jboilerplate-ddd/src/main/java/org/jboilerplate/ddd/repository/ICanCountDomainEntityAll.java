@@ -7,6 +7,6 @@ import org.jboilerplate.ddd.entity.DomainEntity;
  * @author Beniamin.Dziurdza
  * @param <E>
  */
-public interface ICanCountAll<E extends DomainEntity> {
+public interface ICanCountDomainEntityAll<E extends DomainEntity> {
     long countAll();
 }

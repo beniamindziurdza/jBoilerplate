@@ -1,5 +1,6 @@
 package org.jboilerplate.jinq.ddd.infrastructure;
 
+import java.io.Serializable;
 import org.jboilerplate.ddd.entity.DomainEntity;
 import org.jboilerplate.ddd.identity.DomainIdentity;
 
@@ -11,7 +12,7 @@ import org.jboilerplate.ddd.identity.DomainIdentity;
  * @param <E> domain entity backing aggregate root R
  * @param <I> identity of aggregate root (domain entity)
  */
-public abstract class JPAJinqTheSameEntityAsAggregateRootRepository <R, E extends DomainEntity<E,I>, I extends DomainIdentity> {
+public abstract class JPAJinqTheSameEntityAsAggregateRootRepository <R, E extends DomainEntity<E,I>, I extends Serializable> {
 //        implements ICanFindAggregateById<R,I>, ICanFindAllAggregates<R>, ICanCountAllAggregates<R>,
 //                ICanFindAggregatesBySpecification<R,E,I>, ICanCountBySpecification<R,E,I> {
                                                     

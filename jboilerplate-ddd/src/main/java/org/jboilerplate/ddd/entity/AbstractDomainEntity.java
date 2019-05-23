@@ -1,7 +1,7 @@
 package org.jboilerplate.ddd.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
-import org.jboilerplate.ddd.identity.DomainIdentity;
 
 /**
  *
@@ -9,7 +9,9 @@ import org.jboilerplate.ddd.identity.DomainIdentity;
  * @param <E>
  * @param <I>
  */
-public abstract class AbstractDomainEntity<E extends AbstractDomainEntity<E,I>, I extends DomainIdentity> implements DomainEntity<E, I> {
+public abstract class AbstractDomainEntity<E extends AbstractDomainEntity<E,I>, I extends Serializable> implements DomainEntity<E, I> {
+    
+    protected AbstractDomainEntity() {}
     
     protected I identity;
     @Override

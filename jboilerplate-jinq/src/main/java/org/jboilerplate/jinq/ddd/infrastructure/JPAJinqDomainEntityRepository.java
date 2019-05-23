@@ -1,26 +1,25 @@
 package org.jboilerplate.jinq.ddd.infrastructure;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.jboilerplate.ddd.entity.DomainEntity;
-import org.jboilerplate.ddd.identity.DomainIdentity;
-import org.jboilerplate.ddd.repository.ICanCountAll;
-import org.jboilerplate.ddd.repository.ICanFindAll;
-import org.jboilerplate.ddd.repository.ICanFindById;
 import org.jboilerplate.jinq.ddd.specification.ICanCountBySpecification;
 import org.jboilerplate.jinq.ddd.specification.ICanFindBySpecification;
 import org.jboilerplate.jinq.ddd.specification.WhereSpecificationOf;
 import org.jinq.jpa.JinqJPAStreamProvider;
+import org.jboilerplate.ddd.repository.ICanFindDomainEntityAll;
+import org.jboilerplate.ddd.repository.ICanFindDomainEntityById;
+import org.jboilerplate.ddd.repository.ICanCountDomainEntityAll;
 
 /**
  *
- * @author Beniamin.Dziurdza
  * @param <E>
  * @param <I>
  */
-public abstract class JPAJinqRepository<E extends DomainEntity<E,I>, I extends DomainIdentity> 
-        implements ICanFindById<E,I>, ICanFindAll<E>, ICanCountAll<E>,
+public abstract class JPAJinqDomainEntityRepository<E extends DomainEntity<E,I>, I extends Serializable> 
+        implements ICanFindDomainEntityById<E,I>, ICanFindDomainEntityAll<E>, ICanCountDomainEntityAll<E>,
                 ICanFindBySpecification<E,I>, ICanCountBySpecification<E,I> {
     
     final JinqJPAStreamProvider streams = new JinqJPAStreamProvider(entityManager().getMetamodel());

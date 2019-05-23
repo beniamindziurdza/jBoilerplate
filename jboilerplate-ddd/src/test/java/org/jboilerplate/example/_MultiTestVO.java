@@ -15,7 +15,7 @@ import org.jboilerplate.ddd.validation.ValidationResult;
  */
 class _MultiTestVO extends MultiVO<_MultiTestVO> {
         
-    public static _MultiTestVO createOrGetNull(int x, Object obj) { // can throw ValidationDomainException
+    public static _MultiTestVO createOrGetNull(int x, Object obj) {
         return getVerifiedInstanceOrNullIfNullAllAttributes(new _MultiTestVO(x, obj));        
     }
     

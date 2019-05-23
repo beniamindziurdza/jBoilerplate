@@ -1,7 +1,7 @@
 package org.jboilerplate.ddd.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
-import org.jboilerplate.ddd.identity.DomainIdentity;
 
 /**
  *
@@ -9,10 +9,10 @@ import org.jboilerplate.ddd.identity.DomainIdentity;
  * @param <E> domain entity
  * @param <I> identity of entity
  */
-public abstract class BaseDomainEntity<E extends BaseDomainEntity<E, I>, I extends DomainIdentity> implements DomainEntity<E, I> {
+public abstract class BaseDomainEntity<E extends BaseDomainEntity<E, I>, I extends Serializable> implements DomainEntity<E, I> {
         
     protected BaseDomainEntity() {
-        
+        super();
     }
     
     protected I id;
