@@ -11,67 +11,67 @@ import org.jboilerplate.ddd.validation.ValidationResult;
 /**
  *
  * @author Beniamin.Dziurdza
- * @param <VO> Value Object class
+ * @param <voT> Value Object class
  */
-public abstract class MultiVO<VO extends MultiVO<VO>> extends AbstractVO<VO> implements ValueObject {
+public abstract class MultiVO<voT extends MultiVO<voT>> extends AbstractVO<voT> implements ValueObject {
     
-    protected static <VO extends MultiVO<VO>> VO getVerifiedInstanceOrValueIf(VO notVerifiedYet, VO value, Predicate<VO> hasToReturnValue) {
-        VO vo = notVerifiedYet;
+    protected static <voT extends MultiVO<voT>> voT getVerifiedInstanceOrValueIf(voT notVerifiedYet, voT value, Predicate<voT> hasToReturnValue) {
+        voT vo = notVerifiedYet;
         if (hasToReturnValue.test(vo)) return value;
         return vo.verify();
     }    
     
-    protected static <VO extends MultiVO<VO>> VO getVerifiedInstance(VO notVerifiedYet) {        
-        return getVerifiedInstanceOrValueIf(notVerifiedYet, null, (VO v) -> false );
+    protected static <voT extends MultiVO<voT>> voT getVerifiedInstance(voT notVerifiedYet) {        
+        return getVerifiedInstanceOrValueIf(notVerifiedYet, null, (voT v) -> false );
     }
     
-    protected static <VO extends MultiVO<VO>> VO getVerifiedInstanceOrValueIfNullAllAttributes(VO notVerifiedYet, VO value) {        
-        return getVerifiedInstanceOrValueIf(notVerifiedYet, value, (VO v) -> v.allAttributesAreNull() );
+    protected static <voT extends MultiVO<voT>> voT getVerifiedInstanceOrValueIfNullAllAttributes(voT notVerifiedYet, voT value) {        
+        return getVerifiedInstanceOrValueIf(notVerifiedYet, value, (voT v) -> v.allAttributesAreNull() );
     }
 
-    protected static <VO extends MultiVO<VO>> VO getVerifiedInstanceOrNullIfNullAllAttributes(VO notVerifiedYet) {        
-        return getVerifiedInstanceOrValueIf(notVerifiedYet, null, (VO v) -> v.allAttributesAreNull() );
+    protected static <voT extends MultiVO<voT>> voT getVerifiedInstanceOrNullIfNullAllAttributes(voT notVerifiedYet) {        
+        return getVerifiedInstanceOrValueIf(notVerifiedYet, null, (voT v) -> v.allAttributesAreNull() );
     }    
 
-    protected static <VO extends MultiVO<VO>> CreationResult<VO> getCreationResultOfInstanceOrValueIf(VO notValidatedYet, VO value, Predicate<VO> hasToReturnValue) {
-        VO vo = notValidatedYet;
+    protected static <voT extends MultiVO<voT>> CreationResult<voT> getCreationResultOfInstanceOrValueIf(voT notValidatedYet, voT value, Predicate<voT> hasToReturnValue) {
+        voT vo = notValidatedYet;
         if (hasToReturnValue.test(vo)) return new CreationResult<>(value, ValidationResult.satisfied());
         ValidationResult validationResult = vo.validateMe();
         return new CreationResult<>(validationResult.isSatisfied() ? vo : null, validationResult);
     }
     
-    protected static <VO extends MultiVO<VO>> CreationResult<VO> getCreationResultOfInstance(VO notVerifiedYet) {        
-        return getCreationResultOfInstanceOrValueIf(notVerifiedYet, null, (VO v) -> false );
+    protected static <voT extends MultiVO<voT>> CreationResult<voT> getCreationResultOfInstance(voT notVerifiedYet) {        
+        return getCreationResultOfInstanceOrValueIf(notVerifiedYet, null, (voT v) -> false );
     }
     
-    protected static <VO extends MultiVO<VO>> CreationResult<VO> getCreationResultOfInstanceOrValueIfNullAllAttributes(VO notVerifiedYet, VO value) {        
-        return getCreationResultOfInstanceOrValueIf(notVerifiedYet, value, (VO v) -> v.allAttributesAreNull() );
+    protected static <voT extends MultiVO<voT>> CreationResult<voT> getCreationResultOfInstanceOrValueIfNullAllAttributes(voT notVerifiedYet, voT value) {        
+        return getCreationResultOfInstanceOrValueIf(notVerifiedYet, value, (voT v) -> v.allAttributesAreNull() );
     }
         
-    protected static <VO extends MultiVO<VO>> CreationResult<VO> getCreationResultOfInstanceOrNullIfNullAllAttributes(VO notVerifiedYet) {        
-        return getCreationResultOfInstanceOrValueIf(notVerifiedYet, null, (VO v) -> v.allAttributesAreNull() );
+    protected static <voT extends MultiVO<voT>> CreationResult<voT> getCreationResultOfInstanceOrNullIfNullAllAttributes(voT notVerifiedYet) {        
+        return getCreationResultOfInstanceOrValueIf(notVerifiedYet, null, (voT v) -> v.allAttributesAreNull() );
     }
         
-    protected static <VO extends MultiVO<VO>> CreationResult<VO> getCreationResultOfInstanceOrValueIf(
-            Consumer<ValidationResult> validationResultConsumer, VO notValidatedYet, VO value, Predicate<VO> hasToReturnValue) {
-        CreationResult<VO> creationResult = getCreationResultOfInstanceOrValueIf(notValidatedYet, value, hasToReturnValue);
+    protected static <voT extends MultiVO<voT>> CreationResult<voT> getCreationResultOfInstanceOrValueIf(
+            Consumer<ValidationResult> validationResultConsumer, voT notValidatedYet, voT value, Predicate<voT> hasToReturnValue) {
+        CreationResult<voT> creationResult = getCreationResultOfInstanceOrValueIf(notValidatedYet, value, hasToReturnValue);
         validationResultConsumer.accept(creationResult.getValidationResult());
         return creationResult;
     }
     
-    protected static <VO extends MultiVO<VO>> CreationResult<VO> getCreationResultOfInstance(
-            Consumer<ValidationResult> validationResultConsumer, VO notValidatedYet) {
-        return getCreationResultOfInstanceOrValueIf(validationResultConsumer, notValidatedYet, null, (VO v) -> false );
+    protected static <voT extends MultiVO<voT>> CreationResult<voT> getCreationResultOfInstance(
+            Consumer<ValidationResult> validationResultConsumer, voT notValidatedYet) {
+        return getCreationResultOfInstanceOrValueIf(validationResultConsumer, notValidatedYet, null, (voT v) -> false );
     }
     
-    protected static <VO extends MultiVO<VO>> CreationResult<VO> getCreationResultOfInstanceOrValueIfNullAllAttributes(
-        Consumer<ValidationResult> validationResultConsumer, VO notValidatedYet, VO value) {
-        return getCreationResultOfInstanceOrValueIf(validationResultConsumer, notValidatedYet, value, (VO v) -> v.allAttributesAreNull());
+    protected static <voT extends MultiVO<voT>> CreationResult<voT> getCreationResultOfInstanceOrValueIfNullAllAttributes(
+        Consumer<ValidationResult> validationResultConsumer, voT notValidatedYet, voT value) {
+        return getCreationResultOfInstanceOrValueIf(validationResultConsumer, notValidatedYet, value, (voT v) -> v.allAttributesAreNull());
     }
 
-    protected static <VO extends MultiVO<VO>> CreationResult<VO> getCreationResultOfInstanceOrNullIfNullAllAttributes(
-        Consumer<ValidationResult> validationResultConsumer, VO notValidatedYet) {
-        return getCreationResultOfInstanceOrValueIf(validationResultConsumer, notValidatedYet, null, (VO v) -> v.allAttributesAreNull());
+    protected static <voT extends MultiVO<voT>> CreationResult<voT> getCreationResultOfInstanceOrNullIfNullAllAttributes(
+        Consumer<ValidationResult> validationResultConsumer, voT notValidatedYet) {
+        return getCreationResultOfInstanceOrValueIf(validationResultConsumer, notValidatedYet, null, (voT v) -> v.allAttributesAreNull());
     }
     
     protected boolean allAttributesAreNull() {
@@ -81,15 +81,15 @@ public abstract class MultiVO<VO extends MultiVO<VO>> extends AbstractVO<VO> imp
     protected MultiVO() {
     }
     
-    protected abstract List<Function<MultiVO<VO>, Object>> getAccessors();
+    protected abstract List<Function<MultiVO<voT>, Object>> getAccessors();
  
     @Override
     public boolean equals(Object o) {
         if (this.getClass().isInstance(o)) {
-            VO other = (VO) o;
+            voT other = (voT) o;
             if (other.canEqual(this)) {
-                List<Function<MultiVO<VO>, Object>> thisAccesors = this.getAccessors();
-                List<Function<MultiVO<VO>, Object>> otherAccesors = other.getAccessors();
+                List<Function<MultiVO<voT>, Object>> thisAccesors = this.getAccessors();
+                List<Function<MultiVO<voT>, Object>> otherAccesors = other.getAccessors();
                 if (thisAccesors.size() != otherAccesors.size()) return false;
                 for (int i = 0; i < thisAccesors.size(); i++)
                     if (!Objects.equals(thisAccesors.get(i).apply(this), otherAccesors.get(i).apply(other)))

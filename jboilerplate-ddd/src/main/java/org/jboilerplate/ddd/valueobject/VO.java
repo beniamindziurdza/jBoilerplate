@@ -69,13 +69,13 @@ public abstract class VO<voT extends VO<voT,A>, A>
         return tryCreateOrGetValueIf(validationResultConsumer, clazz, attribute, null, (A a) -> false);
     }
 
-    public static <voT extends VO<voT, A>, A> CreationResult<VO> tryCreateOrGetValueIfNullAttribute(
-            Consumer<ValidationResult> validationResultConsumer, Class<VO> clazz, A attribute, VO value) {
+    public static <voT extends VO<voT, A>, A> CreationResult<voT> tryCreateOrGetValueIfNullAttribute(
+            Consumer<ValidationResult> validationResultConsumer, Class<voT> clazz, A attribute, voT value) {
         return  tryCreateOrGetValueIf(validationResultConsumer, clazz, attribute, value, (A a) -> a == null);
     }
     
     public static <voT extends VO<voT, A>, A> CreationResult<voT> tryCreateOrGetNullIfNullAttribute(
-            Consumer<ValidationResult> validationResultConsumer, Class<VO> clazz, A attribute) {
+            Consumer<ValidationResult> validationResultConsumer, Class<voT> clazz, A attribute) {
         return  tryCreateOrGetValueIf(validationResultConsumer, clazz, attribute, null, (A a) -> a == null);
     }
     
